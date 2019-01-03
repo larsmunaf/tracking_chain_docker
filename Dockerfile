@@ -1,8 +1,8 @@
 FROM ubuntu:bionic
 
-WORKDIR /tracking_chain_app/
-
 COPY . /tracking_chain_app
+
+WORKDIR /tracking_chain_app/tracking_chain_no_truffle/
 
 RUN apt-get -y -qq upgrade && \
     apt-get -qq update && \
@@ -15,8 +15,7 @@ RUN apt-get -y -qq upgrade && \
     apt-get -y -qq install telnet && \
     curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install -y nodejs && \
-    sleep 2 && \
-    cd ./tracking_chain_notruffle && npm install && cd .. && \
+    npm install && \
     npm install -g truffle && \
     apt-get -y -qq install software-properties-common && \
     add-apt-repository -y ppa:ethereum/ethereum && \
@@ -27,4 +26,4 @@ EXPOSE 30303
 
 ENV NAME World
 
-ENTRYPOINT ["/bin/bash", "./tracking_chain_notruffle/initChain.sh", "./tracking_chain_notruffle/genesis_template.json", "docker"]
+ENTRYPOINT ["/bin/bash", "./start_node.sh"]
