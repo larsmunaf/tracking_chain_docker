@@ -22,7 +22,7 @@ RUN apt-get -y -qq upgrade && \
     apt-get -qq update && apt-get install -y ethereum
 
 EXPOSE 8545
-EXPOSE 30303
+EXPOSE 30303/udp
 
 ENV NAME World
 
