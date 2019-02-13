@@ -1,16 +1,22 @@
 #!/bin/bash
 
-# clear old docker data
-docker stop $(docker ps -aq)
-docker rm -f $(docker ps -aq)
-#docker rmi -f $(docker images -q)
-
-echo "cleaned up!"
+if [ ! -z "$(docker ps -aq)" ];
+then
+    docker stop $(docker ps -aq)
+fi
 
 # create and init only ONE genesis block
 ./init_genesis_block.sh
-docker build -t trackingchain .
 echo "genesis block initialized!"
+
+if [ "$2" = "rebuild" ];
+then
+    # clear old docker data
+    docker rm -f $(docker ps -aq)
+    #docker rmi -f $(docker images -q)
+    echo "cleaned up!"
+    docker build -t trackingchain .
+fi
 
 docker run --name mybootnode trackingchain &
 echo "started bootnode"

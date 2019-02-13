@@ -9,7 +9,7 @@ if [ "$0"!="docker" ]; then
     done
 
     rm -rf ./tracking_chain/datadir/
-    rm genesis_block.json
+    rm -f genesis_block.json
     echo "removed old chain data"
     sleep 2
 fi
